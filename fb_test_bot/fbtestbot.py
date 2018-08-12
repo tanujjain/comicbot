@@ -7,7 +7,9 @@ from bs4 import BeautifulSoup
 import io
 from PIL import Image
 import datetime
-from src.fb_test_bot.Credentials import *
+#from src.fb_test_bot.Credentials import *
+VERIFY_TOKEN = os.environ.get('VERIFY_TOKEN')
+PAGE_ACCESS_TOKEN = os.environ.get('PAGE_ACCESS_TOKEN')
 
 app = Flask(__name__)
 
