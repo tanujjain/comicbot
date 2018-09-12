@@ -35,6 +35,11 @@ def xkcd():
     return url_img_xkcd
 
 
+def send_all(r_id):
+    send_comic(r_id, dilbert())
+    send_comic(r_id, xkcd())
+
+
 @app.route('/', methods=['GET'])
 def handle_verification():
     print('In root endpoint with token: %s'%request.args.get('hub.verify_token', ''))
@@ -68,6 +73,9 @@ def handle_messages():
 
                     if message_text == 'xkcd':
                         send_comic(sender_id, xkcd())
+
+                    if message_text == 'all':
+                        send_all(sender_id)
 
                 if messaging_event.get("delivery"):
                     pass
