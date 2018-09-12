@@ -27,6 +27,14 @@ def dilbert():
     #return image_returned
 
 
+def xkcd():
+    xkcd_url = 'https://xkcd.com/'
+    page_xkcd = requests.get(xkcd_url)
+    soup_xkcd = BeautifulSoup(page_xkcd.content, 'html.parser')
+    url_img_xkcd = 'http:' + soup_xkcd.findAll('div', {'id': 'comic'})[0].findAll('img')[0]['src']
+    return url_img_xkcd
+
+
 @app.route('/', methods=['GET'])
 def handle_verification():
     print('In root endpoint with token: %s'%request.args.get('hub.verify_token', ''))
@@ -57,6 +65,9 @@ def handle_messages():
 
                     if message_text == 'dilbert':
                         send_comic(sender_id, dilbert())
+
+                    if message_text == 'xkcd':
+                        send_comic(sender_id, xkcd())
 
                 if messaging_event.get("delivery"):
                     pass
