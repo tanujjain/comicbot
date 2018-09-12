@@ -9,8 +9,11 @@ from flask import Flask, request
 from PIL import Image
 
 #from src.fb_test_bot.Credentials import *
-VERIFY_TOKEN = 'anything_to_verify' #os.environ.get('VERIFY_TOKEN')
-PAGE_ACCESS_TOKEN = 'EAAeUO39QC9UBAGDEA22STLEyqFmZASY3w2wzbklZCu4fcxeW3Qko8wLXddKlMwjRiLBydGWUFZCl2JolOVTvvMxJY8xn99l0mZCWXkDDFQOW1SDjb9ZAAiBSOiXnLxXq4mBfJbBwm56IkjqDhVKbh4Q3zuwcYjwEBVb6tZBZA9lBQZDZD' #os.environ.get('PAGE_ACCESS_TOKEN')
+#VERIFY_TOKEN = 'anything_to_verify' #os.environ.get('VERIFY_TOKEN')
+#PAGE_ACCESS_TOKEN = 'EAAeUO39QC9UBAGDEA22STLEyqFmZASY3w2wzbklZCu4fcxeW3Qko8wLXddKlMwjRiLBydGWUFZCl2JolOVTvvMxJY8xn99l0mZCWXkDDFQOW1SDjb9ZAAiBSOiXnLxXq4mBfJbBwm56IkjqDhVKbh4Q3zuwcYjwEBVb6tZBZA9lBQZDZD' #os.environ.get('PAGE_ACCESS_TOKEN')
+
+VERIFY_TOKEN = os.environ(['VERIFY_TOKEN'])
+PAGE_ACCESS_TOKEN = os.environ(['PAGE_ACCESS_TOKEN'])
 
 app = Flask(__name__)
 
