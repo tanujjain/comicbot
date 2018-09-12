@@ -35,9 +35,18 @@ def xkcd():
     return url_img_xkcd
 
 
+def calvin():
+    calvin_url = 'https://www.gocomics.com/calvinandhobbes/'+ ('/').join(str(datetime.datetime.now().date()).split('-'))
+    page_calvin = requests.get(calvin_url)
+    soup_calvin = BeautifulSoup(page_calvin.content, 'html.parser')
+    url_calvin = soup_calvin.find('meta', property="og:image").get("content")
+    return url_calvin
+
+
 def send_all(r_id):
     send_comic(r_id, dilbert())
     send_comic(r_id, xkcd())
+    send_comic(r_id, calvin())
 
 
 @app.route('/', methods=['GET'])
@@ -73,6 +82,9 @@ def handle_messages():
 
                     if message_text == 'xkcd':
                         send_comic(sender_id, xkcd())
+
+                    if message_text == 'cal':
+                        send_comic(sender_id, calvin())
 
                     if message_text == 'all':
                         send_all(sender_id)
