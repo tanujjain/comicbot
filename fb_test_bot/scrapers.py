@@ -1,7 +1,6 @@
+import requests
 import datetime
-from flask import request
 from bs4 import BeautifulSoup
-from PIL import Image
 
 
 def dilbert():

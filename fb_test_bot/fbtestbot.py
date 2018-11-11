@@ -2,8 +2,6 @@ import requests
 import sys
 import os
 import json
-import io
-import datetime
 from flask import Flask, request
 from scrapers import dilbert, xkcd, calvin
 
