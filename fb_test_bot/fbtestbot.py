@@ -117,8 +117,8 @@ def handle_messages():
                     if message_text.lower() == 'phd':
                         send_comic(sender_id, phd())
 
-                    if message_text == 'all':
-                        send_all(sender_id)
+                    #if message_text == 'all':
+                        #send_all(sender_id)
 
                 if messaging_event.get("delivery"):
                     pass
