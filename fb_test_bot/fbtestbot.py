@@ -4,40 +4,14 @@ import os
 import json
 import io
 import datetime
-from bs4 import BeautifulSoup
 from flask import Flask, request
-from PIL import Image
+from scrapers import dilbert, xkcd, calvin
 
 
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 PAGE_ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
 
 app = Flask(__name__)
-
-
-def dilbert():
-    dilbert_url = 'http://dilbert.com/'
-    today_url = dilbert_url + str(datetime.datetime.now().date())
-    page = requests.get(today_url)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    url_img = soup.find_all('div', {'class': ['img-comic-container']})[0].find('img')['src']
-    return url_img
-
-
-def xkcd():
-    xkcd_url = 'https://xkcd.com/'
-    page_xkcd = requests.get(xkcd_url)
-    soup_xkcd = BeautifulSoup(page_xkcd.content, 'html.parser')
-    url_img_xkcd = 'http:' + soup_xkcd.findAll('div', {'id': 'comic'})[0].findAll('img')[0]['src']
-    return url_img_xkcd
-
-
-def calvin():
-    calvin_url = 'https://www.gocomics.com/calvinandhobbes/'+ ('/').join(str(datetime.datetime.now().date()).split('-'))
-    page_calvin = requests.get(calvin_url)
-    soup_calvin = BeautifulSoup(page_calvin.content, 'html.parser')
-    url_calvin = soup_calvin.find('meta', property="og:image").get("content")
-    return url_calvin
 
 
 def send_all(r_id):
@@ -73,13 +47,13 @@ def handle_messages():
                     message_text = messaging_event["message"]["text"]
                     send_message_echo(sender_id, message_text)
 
-                    if message_text == 'dilbert':
+                    if message_text.lower() == 'dilbert':
                         send_comic(sender_id, dilbert())
 
-                    if message_text == 'xkcd':
+                    if message_text.lower() == 'xkcd':
                         send_comic(sender_id, xkcd())
 
-                    if message_text == 'cal':
+                    if message_text.lower() == 'cal':
                         send_comic(sender_id, calvin())
 
                     if message_text == 'all':
