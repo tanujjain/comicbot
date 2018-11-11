@@ -38,6 +38,10 @@ def send_message_echo(recipient_id, message_text):
 
 
 def send_comic(recipient_id, img_url):
+    if img_url == 'placeholder':
+        log('Site not reachable!')
+        send_message_echo(recipient_id, 'This site not currently reachable!')
+        return 0
     log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=img_url))
 
     params = {
