@@ -26,3 +26,11 @@ def calvin():
     soup_calvin = BeautifulSoup(page_calvin.content, 'html.parser')
     url_calvin = soup_calvin.find('meta', property="og:image").get("content")
     return url_calvin
+
+
+def phd():
+    phd_url = 'http://phdcomics.com/comics'
+    page_phd = requests.get(phd_url)
+    soup_phd = BeautifulSoup(page_phd.content, 'html.parser')
+    url_phd = soup_phd.find('meta', property="og:image").get("content")
+    return url_phd
