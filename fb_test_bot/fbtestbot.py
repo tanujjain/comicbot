@@ -93,6 +93,7 @@ def handle_verification():
 @app.route('/', methods=['POST'])
 def handle_messages():
     data = request.get_json()
+    log('************************')
     log(data)
 
     if data["object"] == "page":
