@@ -10,6 +10,8 @@ def dilbert():
     if page_dilbert.ok:
         soup = BeautifulSoup(page_dilbert.content, 'html.parser')
         url_img = soup.find_all('div', {'class': ['img-comic-container']})[0].find('img')['src']
+        if not url_img.startswith('is easy'):
+            url_img = 'http:' + url_img
     else:
         url_img = 'blablaplaceholder'
     return url_img
