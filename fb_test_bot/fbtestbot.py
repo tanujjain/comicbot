@@ -7,6 +7,7 @@ import logging
 from flask import Flask, request
 from scrapers import dilbert, xkcd, calvin, phd
 
+logging.basicConfig(level=logging.DEBUG)
 
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 PAGE_ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
@@ -35,13 +36,16 @@ def send_message_echo(recipient_id, message_text):
 
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
     if r.status_code != requests.codes.ok:
-        print(r)
-        print(r.text)
+        logging.debug(r)
+        logging.debug(r.text)
+        # print(r)
+        # print(r.text)
 
 
 def send_comic(recipient_id, img_url):
     if img_url == 'placeholder':
-        log('Site not reachable!')
+        logging.debug('Site not reachable!')
+        # log('Site not reachable!')
         send_message_echo(recipient_id, 'This site not currently reachable!')
         return 0
     # log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=img_url))
@@ -65,8 +69,10 @@ def send_comic(recipient_id, img_url):
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
-        log(r.status_code)
-    log(r.text)
+        logging.debug(r.status_code)
+        # log(r.status_code)
+    logging.debug(r.text)
+    # log(r.text)
 
 
 def send_all(r_id):
@@ -81,10 +87,13 @@ def send_all(r_id):
 
 @app.route('/', methods=['GET'])
 def handle_verification():
-    print('In root endpoint with token: %s'%request.args.get('hub.verify_token', ''))
-    print(request.args.get('hub.verify_token', '') == VERIFY_TOKEN)
+    logging.debug('In root endpoint with token: %s'%request.args.get('hub.verify_token', ''))
+    # print('In root endpoint with token: %s'%request.args.get('hub.verify_token', ''))
+    logging.debug(request.args.get('hub.verify_token', '') == VERIFY_TOKEN)
+    # print(request.args.get('hub.verify_token', '') == VERIFY_TOKEN)
     if request.args.get('hub.verify_token', '') == VERIFY_TOKEN:
-        print('YEAH!')
+        logging.debug('YEAH!')
+        # print('YEAH!')
         return request.args.get('hub.challenge', 200)
     else:
         return 'Errorrrrr, wrong validation token'
@@ -93,8 +102,9 @@ def handle_verification():
 @app.route('/', methods=['POST'])
 def handle_messages():
     data = request.get_json()
-    log('************************')
-    log(data)
+    logging.debug('************************')
+    # log('************************')
+    # log(data)
 
     if data["object"] == "page":
 
@@ -102,6 +112,7 @@ def handle_messages():
             for messaging_event in entry["messaging"]:
 
                 if messaging_event.get("message"):
+                    logging.debug(messaging_event["message"]["text"])
                     sender_id = messaging_event["sender"]["id"]
                     recipient_id = messaging_event["recipient"]["id"]
                     message_text = messaging_event["message"]["text"]
@@ -134,9 +145,9 @@ def handle_messages():
     return "ok", 200
 
 
-def log(message):  # simple wrapper for logging to stdout on heroku
+'''def log(message):  # simple wrapper for logging to stdout on heroku
     print(str(message))
-    sys.stdout.flush()
+    sys.stdout.flush()'''
 
 
 if __name__ == '__main__':

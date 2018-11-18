@@ -11,7 +11,7 @@ def dilbert():
         soup = BeautifulSoup(page_dilbert.content, 'html.parser')
         url_img = soup.find_all('div', {'class': ['img-comic-container']})[0].find('img')['src']
     else:
-        url_img = 'placeholder'
+        url_img = 'blablaplaceholder'
     return url_img
 
 
@@ -22,7 +22,7 @@ def xkcd():
         soup_xkcd = BeautifulSoup(page_xkcd.content, 'html.parser')
         url_img_xkcd = 'http:' + soup_xkcd.findAll('div', {'id': 'comic'})[0].findAll('img')[0]['src']
     else:
-        url_img_xkcd = 'placeholder'
+        url_img_xkcd = 'blablaplaceholder'
     return url_img_xkcd
 
 
@@ -33,7 +33,7 @@ def calvin():
         soup_calvin = BeautifulSoup(page_calvin.content, 'html.parser')
         url_calvin = soup_calvin.find('meta', property="og:image").get("content")
     else:
-        url_calvin = 'placeholder'
+        url_calvin = 'blablaplaceholder'
     return url_calvin
 
 
@@ -44,5 +44,5 @@ def phd():
         soup_phd = BeautifulSoup(page_phd.content, 'html.parser')
         url_phd = soup_phd.find('meta', property="og:image").get("content")
     else:
-        url_phd = 'placeholder'
+        url_phd = 'blablaplaceholder'
     return url_phd
