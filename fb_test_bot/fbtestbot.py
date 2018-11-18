@@ -35,9 +35,9 @@ def send_message_echo(recipient_id, message_text):
     })
 
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != requests.codes.ok:
-        logging.debug(r)
-        logging.debug(r.text)
+    # if r.status_code != requests.codes.ok:
+        # logging.debug(r)
+        # logging.debug(r.text)
         # print(r)
         # print(r.text)
 
