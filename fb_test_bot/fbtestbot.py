@@ -3,6 +3,7 @@ import sys
 import json
 import time
 import requests
+import logging
 from flask import Flask, request
 from scrapers import dilbert, xkcd, calvin, phd
 
@@ -43,7 +44,7 @@ def send_comic(recipient_id, img_url):
         log('Site not reachable!')
         send_message_echo(recipient_id, 'This site not currently reachable!')
         return 0
-    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=img_url))
+    # log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=img_url))
 
     params = {
         "access_token": PAGE_ACCESS_TOKEN
@@ -70,11 +71,11 @@ def send_comic(recipient_id, img_url):
 
 def send_all(r_id):
     send_comic(r_id, dilbert())
-    time.sleep(2)
+    # time.sleep(2)
     send_comic(r_id, xkcd())
-    time.sleep(2)
+    # time.sleep(2)
     send_comic(r_id, calvin())
-    time.sleep(2)
+    # time.sleep(2)
     send_comic(r_id, phd())
 
 
@@ -117,8 +118,8 @@ def handle_messages():
                     if message_text.lower() == 'phd':
                         send_comic(sender_id, phd())
 
-                    #if message_text == 'all':
-                        #send_all(sender_id)
+                    # if message_text == 'all':
+                        # send_all(sender_id)
 
                 if messaging_event.get("delivery"):
                     pass
@@ -139,6 +140,6 @@ def log(message):  # simple wrapper for logging to stdout on heroku
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    print(VERIFY_TOKEN)
-    print(PAGE_ACCESS_TOKEN)
+    # print(VERIFY_TOKEN)
+    # print(PAGE_ACCESS_TOKEN)
     app.run(host='0.0.0.0', port=port)
