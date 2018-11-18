@@ -68,10 +68,10 @@ def send_comic(recipient_id, img_url):
         }
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != 200:
-        logging.debug(r.status_code)
+    # if r.status_code != 200:
+        # logging.debug(r.status_code)
         # log(r.status_code)
-    logging.debug(r.text)
+    # logging.debug(r.text)
     # log(r.text)
 
 
@@ -87,9 +87,9 @@ def send_all(r_id):
 
 @app.route('/', methods=['GET'])
 def handle_verification():
-    logging.debug('In root endpoint with token: %s'%request.args.get('hub.verify_token', ''))
+    # logging.debug('In root endpoint with token: %s'%request.args.get('hub.verify_token', ''))
     # print('In root endpoint with token: %s'%request.args.get('hub.verify_token', ''))
-    logging.debug(request.args.get('hub.verify_token', '') == VERIFY_TOKEN)
+    # logging.debug(request.args.get('hub.verify_token', '') == VERIFY_TOKEN)
     # print(request.args.get('hub.verify_token', '') == VERIFY_TOKEN)
     if request.args.get('hub.verify_token', '') == VERIFY_TOKEN:
         logging.debug('YEAH!')
@@ -112,7 +112,7 @@ def handle_messages():
             for messaging_event in entry["messaging"]:
 
                 if messaging_event.get("message"):
-                    logging.debug(messaging_event["message"]["text"])
+                    # logging.debug(messaging_event["message"]["text"])
                     sender_id = messaging_event["sender"]["id"]
                     recipient_id = messaging_event["recipient"]["id"]
                     message_text = messaging_event["message"]["text"]
